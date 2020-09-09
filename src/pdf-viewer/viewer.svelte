@@ -1,5 +1,6 @@
 <script>
   import { createEventDispatcher, onDestroy, onMount } from "svelte";
+  import { noop } from "svelte/internal";
   import pdfjs from "pdfjs-dist";
   import pdfjsViewer from "pdfjs-dist/web/pdf_viewer.js";
 
@@ -20,6 +21,8 @@
   let containerRef;
   let pdfViewer;
   async function load(src) {
+    CanvasRenderingContext2D.prototype.strokeText = noop;
+    CanvasRenderingContext2D.prototype.fillText = noop;
     // (Optionally) enable hyperlinks within PDF files.
     const pdfLinkService = new pdfjsViewer.PDFLinkService();
     pdfViewer = new pdfjsViewer.PDFViewer({
@@ -49,11 +52,21 @@
       dispatch("load", { src, pdfViewer, element: containerRef });
     }
   }
+
+  onMount(() => {
+    setTimeout(() => {
+      new Vidy({
+        appid: "bd051c1e-33ae-4ffa-b3d7-74f10a949ed7",
+        postid: "demo-post-slug-pdf",
+        autoload: true,
+      });
+    }, 2000); // this is just temporary and will eventually happen after the pdf loads instead of on a timer
+  });
 </script>
 
 <style>
   .pdfjs-container {
-    width: 100%;
+    /* width: 100%; */
     height: 100%;
   }
   .pdfjs-container :global(.textLayer) {
@@ -63,9 +76,8 @@
     right: 0;
     bottom: 0;
     overflow: hidden;
-    opacity: 0.2;
+    /* opacity: 0.2; */
     line-height: 1;
-    border-bottom: 1px solid black;
   }
   @media print {
     .pdfjs-container :global(.textLayer) {
@@ -73,7 +85,7 @@
     }
   }
   .pdfjs-container :global(.textLayer > span) {
-    color: transparent;
+    /* color: transparent; */
     position: absolute;
     white-space: pre;
     cursor: text;
@@ -98,12 +110,14 @@
   .pdfjs-container :global(.textLayer .highlight.selected) {
     background-color: rgb(0, 100, 0);
   }
-  .pdfjs-container :global(.textLayer ::-moz-selection) {
-    background: rgb(0, 0, 255);
+  /* .pdfjs-container :global(.textLayer ::-moz-selection) {
+    background: rgb(95, 95, 196);
+    color: #fff;
   }
   .pdfjs-container :global(.textLayer ::selection) {
-    background: rgb(0, 0, 255);
-  }
+    background: rgb(95, 95, 196);
+    color: #fff;
+  } */
   .pdfjs-container :global(.textLayer .endOfContent) {
     display: block;
     position: absolute;
@@ -133,7 +147,9 @@
     left: 0;
     width: 100%;
     height: 100%;
+    fill: red;
   }
+
   .pdfjs-container :global(.annotationLayer .linkAnnotation > a:hover),
   .pdfjs-container
     :global(.annotationLayer .buttonWidgetAnnotation.pushButton > a:hover) {
@@ -351,10 +367,12 @@
     overflow: visible;
     background-clip: content-box;
     background-color: white;
+    margin: auto;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
   }
   .pdfjs-container :global(.pdfViewer.removePageBorders .page) {
     margin: 0px auto 10px auto;
-    border: none;
   }
   .pdfjs-container :global(.pdfViewer.singlePageView) {
     display: inline-block;
