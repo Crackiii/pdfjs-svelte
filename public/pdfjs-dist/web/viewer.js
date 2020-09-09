@@ -2225,11 +2225,11 @@ function webViewerPreviousPage() {
 }
 
 function webViewerZoomIn() {
-  PDFViewerApplication.zoomIn();
+  // PDFViewerApplication.zoomIn();
 }
 
 function webViewerZoomOut() {
-  PDFViewerApplication.zoomOut();
+  // PDFViewerApplication.zoomOut();
 }
 
 function webViewerZoomReset() {
@@ -2253,11 +2253,11 @@ function webViewerScaleChanged(evt) {
 }
 
 function webViewerRotateCw() {
-  PDFViewerApplication.rotatePages(90);
+  // PDFViewerApplication.rotatePages(90);
 }
 
 function webViewerRotateCcw() {
-  PDFViewerApplication.rotatePages(-90);
+  // PDFViewerApplication.rotatePages(-90);
 }
 
 function webViewerSwitchScrollMode(evt) {
@@ -2368,46 +2368,46 @@ function setZoomDisabledTimeout() {
 }
 
 function webViewerWheel(evt) {
-  const {
-    pdfViewer,
-    supportedMouseWheelZoomModifierKeys
-  } = PDFViewerApplication;
+  // const {
+  //   pdfViewer,
+  //   supportedMouseWheelZoomModifierKeys
+  // } = PDFViewerApplication;
 
-  if (pdfViewer.isInPresentationMode) {
-    return;
-  }
+  // if (pdfViewer.isInPresentationMode) {
+  //   return;
+  // }
 
-  if (evt.ctrlKey && supportedMouseWheelZoomModifierKeys.ctrlKey || evt.metaKey && supportedMouseWheelZoomModifierKeys.metaKey) {
-    evt.preventDefault();
+  // if (evt.ctrlKey && supportedMouseWheelZoomModifierKeys.ctrlKey || evt.metaKey && supportedMouseWheelZoomModifierKeys.metaKey) {
+  //   evt.preventDefault();
 
-    if (zoomDisabledTimeout || document.visibilityState === "hidden") {
-      return;
-    }
+  //   if (zoomDisabledTimeout || document.visibilityState === "hidden") {
+  //     return;
+  //   }
 
-    const previousScale = pdfViewer.currentScale;
-    const delta = (0, _ui_utils.normalizeWheelEventDelta)(evt);
-    const MOUSE_WHEEL_DELTA_PER_PAGE_SCALE = 3.0;
-    const ticks = delta * MOUSE_WHEEL_DELTA_PER_PAGE_SCALE;
+  //   const previousScale = pdfViewer.currentScale;
+  //   const delta = (0, _ui_utils.normalizeWheelEventDelta)(evt);
+  //   const MOUSE_WHEEL_DELTA_PER_PAGE_SCALE = 3.0;
+  //   const ticks = delta * MOUSE_WHEEL_DELTA_PER_PAGE_SCALE;
 
-    if (ticks < 0) {
-      PDFViewerApplication.zoomOut(-ticks);
-    } else {
-      PDFViewerApplication.zoomIn(ticks);
-    }
+  //   if (ticks < 0) {
+  //     PDFViewerApplication.zoomOut(-ticks);
+  //   } else {
+  //     PDFViewerApplication.zoomIn(ticks);
+  //   }
 
-    const currentScale = pdfViewer.currentScale;
+  //   const currentScale = pdfViewer.currentScale;
 
-    if (previousScale !== currentScale) {
-      const scaleCorrectionFactor = currentScale / previousScale - 1;
-      const rect = pdfViewer.container.getBoundingClientRect();
-      const dx = evt.clientX - rect.left;
-      const dy = evt.clientY - rect.top;
-      pdfViewer.container.scrollLeft += dx * scaleCorrectionFactor;
-      pdfViewer.container.scrollTop += dy * scaleCorrectionFactor;
-    }
-  } else {
-    setZoomDisabledTimeout();
-  }
+  //   if (previousScale !== currentScale) {
+  //     const scaleCorrectionFactor = currentScale / previousScale - 1;
+  //     const rect = pdfViewer.container.getBoundingClientRect();
+  //     const dx = evt.clientX - rect.left;
+  //     const dy = evt.clientY - rect.top;
+  //     pdfViewer.container.scrollLeft += dx * scaleCorrectionFactor;
+  //     pdfViewer.container.scrollTop += dy * scaleCorrectionFactor;
+  //   }
+  // } else {
+  //   setZoomDisabledTimeout();
+  // }
 }
 
 function webViewerClick(evt) {
@@ -2813,7 +2813,7 @@ exports.moveToEndOfArray = moveToEndOfArray;
 exports.WaitOnType = exports.animationStarted = exports.ProgressBar = exports.EventBus = exports.NullL10n = exports.SpreadMode = exports.ScrollMode = exports.TextLayerMode = exports.RendererType = exports.PresentationModeState = exports.VERTICAL_PADDING = exports.SCROLLBAR_PADDING = exports.MAX_AUTO_SCALE = exports.UNKNOWN_SCALE = exports.MAX_SCALE = exports.MIN_SCALE = exports.DEFAULT_SCALE = exports.DEFAULT_SCALE_VALUE = exports.CSS_UNITS = exports.AutoPrintRegExp = void 0;
 const CSS_UNITS = 96.0 / 72.0;
 exports.CSS_UNITS = CSS_UNITS;
-const DEFAULT_SCALE_VALUE = "auto";
+const DEFAULT_SCALE_VALUE = 1.0;
 exports.DEFAULT_SCALE_VALUE = DEFAULT_SCALE_VALUE;
 const DEFAULT_SCALE = 1.0;
 exports.DEFAULT_SCALE = DEFAULT_SCALE;
@@ -2823,7 +2823,7 @@ const MAX_SCALE = 10.0;
 exports.MAX_SCALE = MAX_SCALE;
 const UNKNOWN_SCALE = 0;
 exports.UNKNOWN_SCALE = UNKNOWN_SCALE;
-const MAX_AUTO_SCALE = 1.25;
+const MAX_AUTO_SCALE = 1.0;
 exports.MAX_AUTO_SCALE = MAX_AUTO_SCALE;
 const SCROLLBAR_PADDING = 40;
 exports.SCROLLBAR_PADDING = SCROLLBAR_PADDING;
@@ -11587,23 +11587,23 @@ class Toolbar {
     }
 
     pageNumber.addEventListener("click", function () {
-      this.select();
+      // this.select();
     });
     pageNumber.addEventListener("change", function () {
-      self.eventBus.dispatch("pagenumberchanged", {
-        source: self,
-        value: this.value
-      });
+      // self.eventBus.dispatch("pagenumberchanged", {
+      //   source: self,
+      //   value: this.value
+      // });
     });
     scaleSelect.addEventListener("change", function () {
-      if (this.value === "custom") {
-        return;
-      }
+      // if (this.value === "custom") {
+      //   return;
+      // }
 
-      self.eventBus.dispatch("scalechanged", {
-        source: self,
-        value: this.value
-      });
+      // self.eventBus.dispatch("scalechanged", {
+      //   source: self,
+      //   value: this.value
+      // });
     });
     scaleSelect.oncontextmenu = _ui_utils.noContextMenuHandler;
 
